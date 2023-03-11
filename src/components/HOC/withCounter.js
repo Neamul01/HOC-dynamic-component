@@ -1,20 +1,22 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 const withCounter = (OriginalComponent) => {
-    class NewComponent extends React.Component {
-        state = {
-            count: 0,
+    const NewComponent = () => {
+        const [count, setCount] = useState(0);
+
+        const incrementCount = () => {
+            setCount(count + 1);
         };
 
-        incrementCount = () => {
-            this.setState((prevState) => ({ count: prevState.count + 1 }));
-        };
+        return (
+            <>
+                <h2>this is child</h2>
+                <OriginalComponent count={count} incrementCount={incrementCount} />
+                <p>and the child below</p>
+            </>
+        );
+    };
 
-        render() {
-            const { count } = this.state;
-            return <OriginalComponent count={count} incrementCount={this.incrementCount} />;
-        }
-    }
     return NewComponent;
 };
 
